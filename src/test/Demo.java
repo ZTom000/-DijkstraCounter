@@ -9,7 +9,7 @@ public class Demo {
 	private static final int NODE = 8;
 	private static final int HAVESIDES = NODE - 1;
 	private static final int Max_int = 65535;
-	private static final double Max_Weight = 200;
+	private static final double Max_Weight = 500;
 	
 	
 	public static void main(String[] args) {
@@ -25,7 +25,7 @@ public class Demo {
 							{70.5703, 50.4242, 37.9739, 49.8704, 20.7171, 0, 38.6079, 35.7202},
 							{31.9725, 88.2588, 66.06, 55.9165, 41.1413, 38.6079, 0, 27.6479},
 							{51.482, 75.4184, 45.2832, 28.3099, 23.342, 35.7202, 27.6479,0}};
-		//Dijkstra(graph);
+		Dijkstra(graph);
 		System.out.println(CountRoute(graph));
 	}
 	
@@ -36,75 +36,85 @@ public class Demo {
 		double count = 0;
 		Boolean[] visited = {false,false,false,false,false,false,false,false};
 		
-		for(int i=0 ; i < NODE; i++){
+		for(int a = 1; a < NODE; a++){
 			tempCount = count;
-			for(int j=0; j<NODE; j++){
-				tempCount = count;
-				if(visited[0] == false && graph[i][j] != 0 && visited[j] == false){
-					count += graph[i][j];
-					visited[j] = true;
-					for(int k=0; k<NODE; k++){
-						tempCount = count;
-						if(visited[0] == false && graph[j][k] != 0 && visited[k] == false){
-							count += graph[j][k];
-							visited[k] = true;
-							for(int l=0; l<NODE; l++){
-								tempCount = count;
-								if(visited[0] == false && graph[k][l] != 0 && visited[l] == false){
-									count += graph[k][l];
-									visited[l] = true;
-									for(int n=0; n<NODE; n++){
-										tempCount = count;
-										if(visited[0] == false && graph[l][n] != 0 && visited[n] == false){
-											count += graph[l][n];
-											visited[n] = true;
-											for(int m=0; m<NODE; m++){
-												tempCount = count;
-												if(visited[0] == false && graph[n][m] != 0 && visited[m] == false){
-													count += graph[n][m];
-													visited[m] = true;
-													for(int o=0; o<NODE; o++){
-														tempCount = count;
-														if(visited[0] == false && graph[m][o] != 0 && visited[o] == false){
-															count += graph[m][o];
-															visited[o] = true;
-															for(int p=0; p<NODE; p++){
-																tempCount = count;
-																if(visited[0] == false && graph[o][p] != 0 && visited[p] == false){
-																	count += graph[o][p];
-																	visited[p] = true;
-																			if(count <= Max_Weight){
-																				routeCounter ++;
-																			}
-																
-																	
+			if(visited[a] == false){
+				visited[a] = true;
+				count += graph[0][a];
+				for(int b = 1; b < NODE; b++){
+					tempCount = count;
+					if(visited[b] == false && graph[a][b] != 0){
+						visited[b] = true;
+						count += graph[a][b];
+						for(int c = 1; c < NODE; c++){
+							tempCount = count;
+							if(visited[c] == false && graph[b][c] != 0){
+								visited[c] = true;
+								count += graph[b][c];
+								for(int d = 1; d < NODE; d++){
+									tempCount = count;
+									if(visited[d] == false && graph[c][d] != 0){
+										visited[d] = true;
+										count += graph[c][d];
+										for(int e = 1; e < NODE; e++){
+											tempCount = count;
+											if(visited[e] == false && graph[d][e] != 0){
+												visited[e] = true;
+												count += graph[d][e];
+												for(int f = 1; f < NODE; f++){
+													tempCount = count;
+													if(visited[f] == false && graph[d][f] != 0){
+														visited[f] = true;
+														count += graph[d][f];
+														for(int g = 1; g < NODE; g++){
+															tempCount = count;
+															if(visited[g] == false && graph[f][g] != 0){
+																visited[g] = true;
+																count += graph[f][g];
+																count += graph[g][0];
+																if(count <= Max_Weight){
+																	System.out.println(count);
+																	routeCounter ++;
 																}
-																visited[p] = true;
-																count = tempCount;
 															}
+															if(visited [g] == true){
+																visited [g] = false;
+															}
+															count = tempCount;
 														}
-														visited[o] = true;
-														count = tempCount;
 													}
+													if(visited [f] == true){
+														visited [f] = false;
+													}
+													count = tempCount;
 												}
-												visited[m] = true;
-												count = tempCount;
 											}
+											if(visited [e] == true){
+												visited [e] = false;
+											}
+											count = tempCount;
 										}
-										visited[n] = true;
-										count = tempCount;
 									}
+									if(visited [d] == true){
+										visited [d] = false;
+									}
+									count = tempCount;
 								}
-								visited[l] = true;
-								count = tempCount;
 							}
+							if(visited [c] == true){
+								visited [c] = false;
+							}
+							count = tempCount;
 						}
-						visited[k] = true;
-						count = tempCount;
 					}
+					if(visited [b] == true){
+						visited [b] = false;
+					}
+					count = tempCount;
 				}
-				visited[j] = true;
-				count = tempCount;
+			}
+			if(visited [a] == true){
+				visited [a] = false;
 			}
 			count = tempCount;
 		}
@@ -145,6 +155,7 @@ public class Demo {
 					break;
 				}
 			}
+			System.out.println(count);
 			System.out.println(outputString);
 	}
 
